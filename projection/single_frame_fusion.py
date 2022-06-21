@@ -1,10 +1,8 @@
 # import necessary libs
 import pickle
 import numpy as np
-from dis import dis
-from astyx_utils import *
+import os
 import matplotlib.pyplot as plt
-from PIL import Image
 
 # Define constants
 DATA_DIR = "./data/"
@@ -90,6 +88,35 @@ def detect_inlier(boxes2d, boxes3d):
                inlier = True
         result.append(inlier)
     return result
+
+def lidar2CameraOurs(radar_pc):
+    ''' 
+    This is the projection code for our dataset to project pointcloud onto the camera plane for the mask based clustering
+    input: [Hor, height, depth]
+    '''
+    image_coords = np.zeros((radar_pc.shape[0],2))
+    for pidx, points in enumerate(radar_pc):        
+        point = points[:3]
+        x = point[0] / point[2]
+        y = point[1] / point[2]
+        coeffs = [0,0,0,0,0]
+        fx = 1383.08288574219#595.037*(1920/620)
+        fy = 1381.68029785156#595.037*(1080/480)
+        # ppx = 318.33
+        # ppy = 237.47
+        ppx = 945.295715332031
+        ppy = 530.814331054688
+        r2  = x*x + y*y
+        f = 1 + coeffs[0]*r2 + coeffs[1]*r2*r2 + coeffs[4]*r2*r2*r2
+        x *= f
+        y *= f
+        dx = x + 2*coeffs[2]*x*y + coeffs[3]*(r2 + 2*x*x)
+        dy = y + 2*coeffs[3]*x*y + coeffs[2]*(r2 + 2*y*y)
+        x = dx
+        y = dy
+        pixel = [x * fx + ppx,ppy - y * fy]
+        image_coords[pidx] = pixel
+    return image_coords
 
 if __name__ == "__main__":
     main()
