@@ -169,9 +169,10 @@ class astyx_projection():
 
         return np.expand_dims(np.arctan(camera2world[:,1]/camera2world[:,0]),1)
 
-def radar2CameraOurs(radar_pc):
+def lidar2CameraOurs(radar_pc):
     ''' 
     This is the projection code for our dataset to project pointcloud onto the camera plane for the mask based clustering
+    input: [Hor, height, depth]
     '''
     image_coords = np.zeros((radar_pc.shape[0],2))
     for pidx, points in enumerate(radar_pc):        
@@ -179,10 +180,12 @@ def radar2CameraOurs(radar_pc):
         x = point[0] / point[2]
         y = point[1] / point[2]
         coeffs = [0,0,0,0,0]
-        fx = 595.037
-        fy = 595.037
-        ppx = 318.33
-        ppy = 237.47
+        fx = 1383.08288574219#595.037*(1920/620)
+        fy = 1381.68029785156#595.037*(1080/480)
+        # ppx = 318.33
+        # ppy = 237.47
+        ppx = 945.295715332031
+        ppy = 530.814331054688
         r2  = x*x + y*y
         f = 1 + coeffs[0]*r2 + coeffs[1]*r2*r2 + coeffs[4]*r2*r2*r2
         x *= f

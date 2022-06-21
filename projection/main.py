@@ -6,15 +6,17 @@ import pdb
 from PIL import Image
 
 data = Astyx_Data()
-
-
 img = data.get_camera("000300")
-
 params = data.get_calibration_details()
-
 proj = astyx_projection(params)
-
 lidar_pc = data.get_lidar("000300")
+
+with open('0038.npy', 'rb') as handle:
+    lidar_pc_38 = np.load(handle)
+lidar_pc_38 = lidar_pc_38[lidar_pc_38[:, 0] > 0]
+lidar_pc_38[:,1] = -lidar_pc_38[:,1]
+lidar_image = radar2CameraOurs(lidar_pc)
+
 
 print("========================experiment space========================")
 # print("lidar_pc.shape: ", lidar_pc.shape)

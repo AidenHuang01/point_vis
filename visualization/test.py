@@ -36,7 +36,7 @@ box = pred_dict['pred_boxes']
 score = pred_dict['pred_scores']
 label = pred_dict['pred_labels']
 
-select = 2
+select = 4
 
 if select != 0:
     box = box[:select,:]
