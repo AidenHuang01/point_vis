@@ -24,7 +24,6 @@ python ./single_frame_fusion.py
 * edit your calib information from lidar to camera in single_frame_fusion.py::lidar2CameraOurs()  
   
 ```bash
-git clone git@github.com:AidenHuang01/point_vis.git
 cd point_vis/projection
 python ./single_frame_fusion.py
 ```
