@@ -1,6 +1,5 @@
 from cProfile import label
 import numpy as np
-import torch
 from torch import tensor
 import open3d
 import pickle
@@ -31,14 +30,17 @@ with open('points.pickle', 'rb') as handle:
 #     score = score[:3]
 #     print(label)
 
-with open('0038_pred_dict_filtered.pickle', 'rb') as handle:
+with open('pred_dicts0.pickle', 'rb') as handle:
     pred_dict = pickle.load(handle)
 box = pred_dict['pred_boxes']
 score = pred_dict['pred_scores']
 label = pred_dict['pred_labels']
-box = torch.stack(box)
-score = torch.stack(score)
-label = torch.stack(label)
 
+select = 4
+
+if select != 0:
+    box = box[:select,:]
+    score = score[:select]
+    label = label[:select]
 
 V.draw_scenes(points, ref_boxes=box, ref_scores=score, ref_labels=label)
