@@ -1,3 +1,4 @@
 astyx/
-projection/data
-projection/output
+projection/data/
+./projection/outputs/
+./projection/outputs/*
