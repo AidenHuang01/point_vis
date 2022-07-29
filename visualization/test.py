@@ -4,10 +4,10 @@ from torch import tensor
 import open3d
 import pickle
 import open3d_vis_utils as V
-data = np.load('0038_flip_x.npy')
-x = data[:, 0]
-y = data[:, 1]
-z = data[:, 2]
+points = np.load('/home/yucheng/storage/data/0721/test_gilman_04/points/0022.npy')
+x = points[:, 0]
+y = points[:, 1]
+z = points[:, 2]
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import proj3d
@@ -17,8 +17,8 @@ from mpl_toolkits.mplot3d import proj3d
 
 # ax.scatter(x, y, z)
 # plt.show()
-with open('points.pickle', 'rb') as handle:
-    points = pickle.load(handle)
+# with open('points.pickle', 'rb') as handle:
+#     points = pickle.load(handle)
 # with open('box.pickle', 'rb') as handle:
 #     box = pickle.load(handle)
 #     box = box[:3,:]
@@ -30,14 +30,15 @@ with open('points.pickle', 'rb') as handle:
 #     score = score[:3]
 #     print(label)
 
-with open('0038_pred_dict_filtered.pickle', 'rb') as handle:
+with open('/home/yucheng/storage/data/0721/test_gilman_04/3D_boxes/0022_pred_dict.pickle', 'rb') as handle:
     pred_dict = pickle.load(handle)
 box = pred_dict['pred_boxes']
 score = pred_dict['pred_scores']
 label = pred_dict['pred_labels']
-box = torch.stack(box)
-score = torch.stack(score)
-label = torch.stack(label)
+print(score)
+# box = torch.stack(box)
+# score = torch.stack(score)
+# label = torch.stack(label)
 
 
 V.draw_scenes(points, ref_boxes=box, ref_scores=score, ref_labels=label)

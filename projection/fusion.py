@@ -70,7 +70,7 @@ for file in tqdm(file_list_no_ex):
                 boxes_3D_filtered.append(boxes_3D[i])
                 scores_3D_filtered.append(scores_3D[i])
                 labels_3D_filtered.append(labels_3D[i])
-        elif scores_3D[i] > 0.5:
+        elif scores_3D[i] > 0.4:
                 boxes_3D_filtered.append(boxes_3D[i])
                 scores_3D_filtered.append(scores_3D[i])
                 labels_3D_filtered.append(labels_3D[i])
