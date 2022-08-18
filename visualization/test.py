@@ -4,7 +4,7 @@ from torch import tensor
 import open3d
 import pickle
 import open3d_vis_utils as V
-points = np.load('/home/yucheng/storage/data/0721/test_gilman_04/points/0022.npy')
+points = np.load('/home/yucheng/storage/data/0/points/0004.npy')
 x = points[:, 0]
 y = points[:, 1]
 z = points[:, 2]
@@ -30,15 +30,20 @@ from mpl_toolkits.mplot3d import proj3d
 #     score = score[:3]
 #     print(label)
 
-with open('/home/yucheng/storage/data/0721/test_gilman_04/3D_boxes/0022_pred_dict.pickle', 'rb') as handle:
-    pred_dict = pickle.load(handle)
-box = pred_dict['pred_boxes']
-score = pred_dict['pred_scores']
-label = pred_dict['pred_labels']
-print(score)
+# with open('/home/yucheng/storage/data/0814/3D_boxes/0004_pred_dict.pickle', 'rb') as handle:
+#     pred_dict = pickle.load(handle)
+# box = pred_dict['pred_boxes']
+# score = pred_dict['pred_scores']
+# label = pred_dict['pred_labels']
+# print(score)
+
+with open('/home/yucheng/storage/data/0815/pseudo_box.pickle', 'rb') as handle:
+    box = pickle.load(handle)
+
+V.draw_scenes(points, ref_boxes=box)
 # box = torch.stack(box)
 # score = torch.stack(score)
 # label = torch.stack(label)
 
 
-V.draw_scenes(points, ref_boxes=box, ref_scores=score, ref_labels=label)
+# V.draw_scenes(points, ref_boxes=box, ref_scores=score, ref_labels=label)

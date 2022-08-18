@@ -35,12 +35,12 @@ def detect_inlier(boxes2d, boxes3d):
     Detect from the 3D boudning boexes if they are inside the 2D bounding boxes
     Args:
     boxes2d : np.array of shape [n, 4]
-              boxes2d element [y1, x1, y2, x2]
-              (x1,y1)-------
-                |          |
-                |          |
-                |          |
-                --------(x2,y2)
+              boxes2d element [x1, y1, x2, y2]
+              x1 -------- y1
+               |          |
+               |          |
+               |          |
+              x2 -------- y2
     boxes3d : np.array of shape [m, 2]
               boxes3d element [x, y, z]
     Return:
@@ -49,10 +49,9 @@ def detect_inlier(boxes2d, boxes3d):
     result = []
     for box3d in boxes3d:
         inlier = False
-        for box2d_raw in boxes2d:
-            box2d = box2d_raw[[1,0,3,2]]
-            if box3d[0] >= box2d[0] and box3d[0] <= box2d[2] and\
-               box3d[1] >= box2d[1] and box3d[1] <= box2d[3]:
+        for box2d in boxes2d:
+            if box3d[0] >= box2d[1] * 0.8 and box3d[0] <= box2d[3] * 1.2 and\
+               box3d[1] >= box2d[0] * 0.8 and box3d[1] <= box2d[2] * 1.2:
                inlier = True
         result.append(inlier)
     return result
